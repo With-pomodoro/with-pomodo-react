@@ -1,26 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import GridLayout from "./components/WithPomodoro";
+import styled from "styled-components";
+import TitleContainer from "./container/TitleContainer";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <GridLayout>
+      <PositionedTitleContainer />
+    </GridLayout>
   );
 }
 
 export default App;
+
+const PositionedTitleContainer = styled(TitleContainer)`
+  grid-column: 1/2;
+  grid-row: 1/2;
+`;
