@@ -14,6 +14,6 @@ function App() {
 export default App;
 
 const PositionedTitleContainer = styled(TitleContainer)`
-  grid-column: 1/2;
+  grid-column: 1/3;
   grid-row: 1/2;
 `;

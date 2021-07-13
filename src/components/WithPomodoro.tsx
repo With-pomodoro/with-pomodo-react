@@ -10,7 +10,7 @@ export default GridLayout;
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 4fr 1fr;
+  grid-template-columns: 1fr 3fr 1fr;
   grid-template-rows: 1fr 8fr;
 
   background: ${color.mainBg};
