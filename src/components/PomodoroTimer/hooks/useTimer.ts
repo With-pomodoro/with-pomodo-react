@@ -24,7 +24,7 @@ const calcInitTime = (mode: TimerMode) => {
   }
 };
 
-const useTime = (initMode: TimerMode): ReturnType => {
+const useTimer = (initMode: TimerMode): ReturnType => {
   const [mode, setMode] = useState<TimerMode>(initMode);
   const [remainingTime, setRemainignTime] = useState<number>(
     calcInitTime(initMode)
@@ -88,4 +88,4 @@ const useTime = (initMode: TimerMode): ReturnType => {
   return { remainingTime, startTimer, isStart };
 };
 
-export default useTime;
+export default useTimer;
