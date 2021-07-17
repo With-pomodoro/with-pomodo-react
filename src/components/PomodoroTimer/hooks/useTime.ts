@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   INIT_LONG_REST_TIME,
   INIT_REST_TIME,
@@ -9,7 +9,7 @@ import { TimerMode } from "../types";
 type ReturnType = {
   remainingTime: number;
   startTimer: () => void;
-  modeChange: (mode: TimerMode) => void;
+  isStart: boolean;
 };
 
 const calcInitTime = (mode: TimerMode) => {
@@ -24,42 +24,68 @@ const calcInitTime = (mode: TimerMode) => {
   }
 };
 
-const useTime = (mode: TimerMode): ReturnType => {
+const useTime = (initMode: TimerMode): ReturnType => {
+  const [mode, setMode] = useState<TimerMode>(initMode);
   const [remainingTime, setRemainignTime] = useState<number>(
-    calcInitTime(mode)
+    calcInitTime(initMode)
   );
+  const [pomodoroCnt, setPomodoroCnt] = useState(0);
 
   const [isStart, setIsStart] = useState(false);
-  const [intervalId, setIntervalId] = useState(0);
+
+  useEffect(() => {
+    if (mode === "work") {
+      setPomodoroCnt((prev) => prev + 1);
+    }
+  }, [mode]);
+
+  const switchMode = () => {
+    if (mode === "longRest") {
+      modeChange("work");
+      return;
+    }
+    if (pomodoroCnt > 0 && pomodoroCnt % 4 === 0) {
+      modeChange("longRest");
+      return;
+    }
+
+    if (mode === "work") {
+      modeChange("rest");
+    } else if (mode === "rest") {
+      modeChange("work");
+    }
+  };
+
+  const resetTimer = (mode: TimerMode) => {
+    setIsStart(false);
+    setRemainignTime(calcInitTime(mode));
+  };
+
+  const modeChange = (mode: TimerMode) => {
+    resetTimer(mode);
+    setMode(mode);
+  };
 
   const startTimer = () => {
     if (!isStart) {
-      const id = window.setInterval(() => {
+      const intervalId = window.setInterval(() => {
         setRemainignTime((t) => {
           if (t > 0) {
             return t - 1;
-          } else {
-            window.clearInterval(id);
+          } else if (t === 0) {
+            window.clearInterval(intervalId);
+            switchMode();
             return t;
+          } else {
+            throw new Error("remaining time is nagative!!!");
           }
         });
-      }, 1);
-      setIntervalId(id);
+      }, 1000);
       setIsStart(true);
     }
   };
 
-  const resetTimer = () => {
-    window.clearInterval(intervalId);
-    setIsStart(false);
-  };
-
-  const modeChange = (mode: TimerMode) => {
-    resetTimer();
-    setRemainignTime(calcInitTime(mode));
-  };
-
-  return { remainingTime, startTimer, modeChange };
+  return { remainingTime, startTimer, isStart };
 };
 
 export default useTime;
