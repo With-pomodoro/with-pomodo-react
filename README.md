@@ -1,3 +1,14 @@
+# ポモドーロタイマーの仕様
+25分のタイマーを設定します。
+
+タイマーをスタートし、終了するまで作業します。
+
+タイマーが鳴ったら5分休憩します。これを4ポモドーロ繰り返します。
+
+4ポモドーロ終了したら、15分から30分間の長めの休憩を取ります。これを一日に数回繰り返します。
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
