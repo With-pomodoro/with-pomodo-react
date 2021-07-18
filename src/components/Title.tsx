@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import Spacer from "./Spacer";
 import { ClassNameProps } from "../shared/types";
+import mediaQueries from "../shared/mediaQuery";
 
 const Title: FC<ClassNameProps> = ({ className }) => {
   return (
@@ -23,6 +24,10 @@ const Container = styled.div`
 const TitleText = styled.h1`
   font-weight: 700;
   font-size: 58px;
+
+  ${mediaQueries.mobile} {
+    font-size: 38px;
+  }
 `;
 
 const ShareButton = styled.button`
@@ -30,4 +35,7 @@ const ShareButton = styled.button`
   background: inherit;
   border: none;
   display: contents;
+  ${mediaQueries.mobile} {
+    visibility: hidden;
+  }
 `;

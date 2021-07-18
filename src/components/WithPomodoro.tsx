@@ -1,12 +1,13 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 import color from "../shared/color";
+import mediaQueries from "../shared/mediaQuery";
 
-const GridLayout: FC = ({ children }) => {
+const Layout: FC = ({ children }) => {
   return <Container>{children}</Container>;
 };
 
-export default GridLayout;
+export default Layout;
 
 const Container = styled.div`
   display: grid;
@@ -17,4 +18,10 @@ const Container = styled.div`
   width: 100vw;
   height: 100vh;
   padding: 40px;
+
+  ${mediaQueries.mobile} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;

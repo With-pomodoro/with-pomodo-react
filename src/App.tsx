@@ -1,15 +1,15 @@
 import React from "react";
-import GridLayout from "./components/WithPomodoro";
+import Layout from "./components/WithPomodoro";
 import styled from "styled-components";
 import Title from "./components/Title";
 import PomodoroTimer from "./components/PomodoroTimer/PomodoroTimer";
 
 function App() {
   return (
-    <GridLayout>
+    <Layout>
       <PositionedTitle />
       <PositionedPomodoroTimer />
-    </GridLayout>
+    </Layout>
   );
 }
 
