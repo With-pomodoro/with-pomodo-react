@@ -60,11 +60,8 @@ const useTimer = (initMode: TimerMode): ReturnType => {
             return t - 1;
           } else if (t === 0) {
             window.clearInterval(intervalId);
-            try {
-              timeoutAudio.play();
-            } catch (e) {
-              console.log(e);
-            }
+            timeoutAudio.play();
+
             switchMode();
             return t;
           } else {

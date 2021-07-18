@@ -9,7 +9,6 @@ type Props = {
 };
 const ClockBoard: FC<Props> = ({ secOfTime, mode }) => {
   const timeObj = convertTime(secOfTime);
-  console.log(mediaQueries.mobile);
 
   return (
     <Container>
