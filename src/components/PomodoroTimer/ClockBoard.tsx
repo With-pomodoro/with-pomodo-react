@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import { TimerMode } from "./types";
 import { convertTime, convModeForView } from "./utils";
@@ -8,9 +8,19 @@ type Props = {
 };
 const ClockBoard: FC<Props> = ({ secOfTime, mode }) => {
   const timeObj = convertTime(secOfTime);
+  const [indicator, setIndicator] = useState(true);
+  useEffect(() => {
+    window.setTimeout(() => {
+      setIndicator((prev) => !prev);
+    }, 1000);
+  }, [indicator]);
   return (
     <Container>
-      <Time>{`${timeObj.min}:${timeObj.sec}`}</Time>
+      <Time>
+        {timeObj.min}
+        <Indicator>{indicator && ":"}</Indicator>
+        {timeObj.sec}
+      </Time>
       <Mode>{convModeForView(mode)}</Mode>
     </Container>
   );
@@ -19,7 +29,7 @@ const ClockBoard: FC<Props> = ({ secOfTime, mode }) => {
 export default ClockBoard;
 
 const size = 400;
-const Container = styled.div`
+const Container = styled.h2`
   height: ${size}px;
   width: ${size}px;
 
@@ -33,10 +43,15 @@ const Container = styled.div`
 `;
 
 const Time = styled.h2`
+  display: inline-block;
   font-size: 100px;
   font-weight: 700;
 `;
 
+const Indicator = styled(Time)`
+  min-width: 30px;
+  text-align: center;
+`;
 const Mode = styled.p`
   font-size: 38px;
   font-weight: 700;
