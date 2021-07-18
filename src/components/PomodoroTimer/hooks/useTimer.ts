@@ -57,7 +57,7 @@ const useTimer = (initMode: TimerMode): ReturnType => {
       const intervalId = window.setInterval(() => {
         setRemainignTime((t) => {
           if (t > 0) {
-            return t - 10;
+            return t - 1;
           } else if (t === 0) {
             window.clearInterval(intervalId);
             try {
@@ -71,7 +71,7 @@ const useTimer = (initMode: TimerMode): ReturnType => {
             throw new Error("remaining time is nagative!!!");
           }
         });
-      }, 1);
+      }, 1000);
       setIsStart(true);
     }
   };
