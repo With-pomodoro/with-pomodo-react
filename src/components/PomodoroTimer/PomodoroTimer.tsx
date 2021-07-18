@@ -1,5 +1,6 @@
 import React, { FC, useState } from "react";
 import styled from "styled-components";
+import mediaQueries from "../../shared/mediaQuery";
 import { ClassNameProps } from "../../shared/types";
 import ClockBoard from "./ClockBoard";
 import useTimer from "./hooks/useTimer";
@@ -39,4 +40,9 @@ const StyledTimerStartButton = styled(TimerStartButton)`
   position: relative;
   top: 30px;
   left: 160px;
+
+  ${mediaQueries.mobile} {
+    top: 10px;
+    left: 120px;
+  }
 `;
