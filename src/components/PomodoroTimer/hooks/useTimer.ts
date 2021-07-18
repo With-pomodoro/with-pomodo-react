@@ -1,27 +1,12 @@
 import { useEffect, useState } from "react";
-import {
-  INIT_LONG_REST_TIME,
-  INIT_REST_TIME,
-  INIT_WORK_TIME,
-} from "../constants";
 import { TimerMode } from "../types";
+import { calcInitTime } from "./utils";
 
 type ReturnType = {
   remainingTime: number;
   startTimer: () => void;
   isStart: boolean;
-};
-
-const calcInitTime = (mode: TimerMode) => {
-  if (mode === "work") {
-    return INIT_WORK_TIME;
-  } else if (mode === "rest") {
-    return INIT_REST_TIME;
-  } else if (mode === "longRest") {
-    return INIT_LONG_REST_TIME;
-  } else {
-    throw new Error(`invalid mode:${mode}`);
-  }
+  mode: TimerMode;
 };
 
 const useTimer = (initMode: TimerMode): ReturnType => {
@@ -85,7 +70,7 @@ const useTimer = (initMode: TimerMode): ReturnType => {
     }
   };
 
-  return { remainingTime, startTimer, isStart };
+  return { remainingTime, startTimer, isStart, mode };
 };
 
 export default useTimer;
