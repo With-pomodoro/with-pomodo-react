@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 import { TimerMode } from "./types";
-import { convertTime } from "./utils";
+import { convertTime, convModeForView } from "./utils";
 type Props = {
   secOfTime: number;
   mode: TimerMode;
@@ -11,7 +11,7 @@ const ClockBoard: FC<Props> = ({ secOfTime, mode }) => {
   return (
     <Container>
       <Time>{`${timeObj.min}:${timeObj.sec}`}</Time>
-      <Mode>{mode}</Mode>
+      <Mode>{convModeForView(mode)}</Mode>
     </Container>
   );
 };
