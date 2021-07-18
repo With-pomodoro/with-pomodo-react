@@ -16,7 +16,8 @@ const Container = styled.div`
 
   background: ${color.mainBg};
   width: 100vw;
-  height: 100vh;
+  min-height: ${window.innerHeight}px;
+  height: ${window.innerHeight}px;
   padding: 40px;
 
   ${mediaQueries.mobile} {
