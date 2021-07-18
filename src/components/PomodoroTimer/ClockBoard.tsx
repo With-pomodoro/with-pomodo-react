@@ -17,9 +17,7 @@ const ClockBoard: FC<Props> = ({ secOfTime, mode }) => {
   return (
     <Container>
       <Time>
-        {timeObj.min}
-        <Indicator>{indicator && ":"}</Indicator>
-        {timeObj.sec}
+        {timeObj.min}:{timeObj.sec}
       </Time>
       <Mode>{convModeForView(mode)}</Mode>
     </Container>
@@ -46,11 +44,6 @@ const Time = styled.h2`
   display: inline-block;
   font-size: 100px;
   font-weight: 700;
-`;
-
-const Indicator = styled(Time)`
-  min-width: 30px;
-  text-align: center;
 `;
 const Mode = styled.p`
   font-size: 38px;
