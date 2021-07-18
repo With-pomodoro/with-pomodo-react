@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { timeoutAudio } from "../../../shared/audios";
 import { TimerMode } from "../types";
 import { calcInitTime } from "./utils";
 
@@ -20,7 +21,7 @@ const useTimer = (initMode: TimerMode): ReturnType => {
 
   useEffect(() => {
     if (mode === "work") {
-      setPomodoroCnt((prev) => prev + 1);
+      setPomodoroCnt((prev) => prev + 10);
     }
   }, [mode]);
 
@@ -56,16 +57,21 @@ const useTimer = (initMode: TimerMode): ReturnType => {
       const intervalId = window.setInterval(() => {
         setRemainignTime((t) => {
           if (t > 0) {
-            return t - 1;
+            return t - 10;
           } else if (t === 0) {
             window.clearInterval(intervalId);
+            try {
+              timeoutAudio.play();
+            } catch (e) {
+              console.log(e);
+            }
             switchMode();
             return t;
           } else {
             throw new Error("remaining time is nagative!!!");
           }
         });
-      }, 1000);
+      }, 1);
       setIsStart(true);
     }
   };
