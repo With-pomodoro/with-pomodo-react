@@ -16,3 +16,5 @@ export const calcInitTime = (mode: TimerMode) => {
     throw new Error(`invalid mode:${mode}`);
   }
 };
+
+export const nextTiming = () => 1000 - (Date.now() % 1000);
