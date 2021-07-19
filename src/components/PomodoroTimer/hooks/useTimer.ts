@@ -1,31 +1,33 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { timeoutAudio } from "../../../shared/audios";
-import { TimerMode } from "../types";
-import { calcInitTime } from "./utils";
+import { TimerMode, TimerStatus } from "../types";
+import { calcInitTime, nextTiming } from "./utils";
 
 type ReturnType = {
   remainingTime: number;
   startTimer: () => void;
-  isStart: boolean;
+  status: TimerStatus;
   mode: TimerMode;
 };
 
 const useTimer = (initMode: TimerMode): ReturnType => {
   const [mode, setMode] = useState<TimerMode>(initMode);
+  const [status, setStatus] = useState<TimerStatus>("pause");
   const [remainingTime, setRemainignTime] = useState<number>(
     calcInitTime(initMode)
   );
   const [pomodoroCnt, setPomodoroCnt] = useState(0);
 
-  const [isStart, setIsStart] = useState(false);
+  const decreaseTime = () => {
+    setRemainignTime((t) => t - 1);
+  };
 
-  useEffect(() => {
-    if (mode === "work") {
-      setPomodoroCnt((prev) => prev + 10);
-    }
-  }, [mode]);
+  const modeChange = useCallback((mode: TimerMode) => {
+    resetTimer(mode);
+    setMode(mode);
+  }, []);
 
-  const switchMode = () => {
+  const switchMode = useCallback(() => {
     if (mode === "longRest") {
       modeChange("work");
       return;
@@ -40,40 +42,41 @@ const useTimer = (initMode: TimerMode): ReturnType => {
     } else if (mode === "rest") {
       modeChange("work");
     }
-  };
+  }, [mode, modeChange, pomodoroCnt]);
+
+  useEffect(() => {
+    if (mode === "work") {
+      setPomodoroCnt((prev) => prev + 1);
+    }
+  }, [mode]);
+
+  useEffect(() => {
+    if (status === "run" && remainingTime >= 0) {
+      setTimeout(() => {
+        decreaseTime();
+      }, nextTiming());
+    }
+  }, [status, remainingTime]);
+
+  useEffect(() => {
+    if (remainingTime < 0) {
+      timeoutAudio.play();
+      setStatus("pause");
+      switchMode();
+    }
+  }, [remainingTime, switchMode]);
 
   const resetTimer = (mode: TimerMode) => {
-    setIsStart(false);
     setRemainignTime(calcInitTime(mode));
   };
 
-  const modeChange = (mode: TimerMode) => {
-    resetTimer(mode);
-    setMode(mode);
-  };
-
   const startTimer = () => {
-    if (!isStart) {
-      const intervalId = window.setInterval(() => {
-        setRemainignTime((t) => {
-          if (t > 0) {
-            return t - 1;
-          } else if (t === 0) {
-            window.clearInterval(intervalId);
-            timeoutAudio.play();
-
-            switchMode();
-            return t;
-          } else {
-            throw new Error("remaining time is nagative!!!");
-          }
-        });
-      }, 1000);
-      setIsStart(true);
+    if (status === "pause") {
+      setStatus("run");
     }
   };
 
-  return { remainingTime, startTimer, isStart, mode };
+  return { remainingTime, startTimer, status, mode };
 };
 
 export default useTimer;

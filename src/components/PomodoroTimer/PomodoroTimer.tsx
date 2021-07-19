@@ -10,14 +10,14 @@ import { TimerMode } from "./types";
 const PomodoroTimer: FC<ClassNameProps> = ({ className }) => {
   const [timerMode] = useState<TimerMode>("work");
   // 秒で計算する
-  const { remainingTime, startTimer, mode, isStart } = useTimer(timerMode);
+  const { remainingTime, startTimer, mode, status } = useTimer(timerMode);
 
   return (
     <Container className={className}>
       <ClockBoard secOfTime={remainingTime} mode={mode} />
       <StyledTimerStartButton
         handleClick={() => startTimer()}
-        isStart={isStart}
+        timerStatus={status}
       />
     </Container>
   );

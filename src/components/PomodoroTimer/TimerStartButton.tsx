@@ -3,14 +3,19 @@ import styled from "styled-components";
 import color from "../../shared/color";
 import mediaQueries from "../../shared/mediaQuery";
 import { ClassNameProps } from "../../shared/types";
+import { TimerStatus } from "./types";
 
 type Props = {
-  isStart: boolean;
+  timerStatus: TimerStatus;
   handleClick: () => void;
 } & ClassNameProps;
 
-const TimerStartButton: FC<Props> = ({ className, isStart, handleClick }) => {
-  const buttonText = isStart ? "◉" : "START";
+const TimerStartButton: FC<Props> = ({
+  className,
+  timerStatus,
+  handleClick,
+}) => {
+  const buttonText = timerStatus === "run" ? "◉" : "START";
   return (
     <Container onClick={handleClick} className={className}>
       <ButtonText>{buttonText}</ButtonText>
