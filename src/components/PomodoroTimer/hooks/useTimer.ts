@@ -18,7 +18,7 @@ const useTimer = (initMode: TimerMode): ReturnType => {
     calcInitTime(initMode)
   );
 
-  const [pomodoroCnt, setPomodoroCnt] = useState(0);
+  const [pomodoroCnt, setPomodoroCnt] = useState(1);
 
   const updateTime = useCallback(() => {
     if (limitDate == null) return;
