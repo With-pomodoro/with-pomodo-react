@@ -32,7 +32,7 @@ const TitleText = styled.h1`
 
 const ShareButton = styled.button`
   /* FIXME: shareボタンが実装できてないので隠す */
-  visibility: none;
+  visibility: hidden;
   font-weight: 700;
   background: inherit;
   border: none;
