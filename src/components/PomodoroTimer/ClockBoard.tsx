@@ -24,7 +24,7 @@ export default ClockBoard;
 
 const size = 400;
 const mobileSize = 318;
-const Container = styled.h2`
+const Container = styled.div`
   height: ${size}px;
   width: ${size}px;
 
