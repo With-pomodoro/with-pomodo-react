@@ -14,7 +14,7 @@ const useTimer = (initMode: TimerMode): ReturnType => {
   const [mode, setMode] = useState<TimerMode>(initMode);
   const [status, setStatus] = useState<TimerStatus>("pause");
   const [limitDate, setLimitDate] = useState<Date>();
-  const [remainingTime, setRemainignTime] = useState<number>(
+  const [remainingTime, setRemainingTime] = useState<number>(
     calcInitTime(initMode)
   );
 
@@ -26,7 +26,9 @@ const useTimer = (initMode: TimerMode): ReturnType => {
     // 現在時刻と startTimer 関数が設定した limitDate との差を残り時間とする
     const now = new Date();
     const diffSec = Math.floor((limitDate.getTime() - now.getTime()) / 1000);
-    setRemainignTime(diffSec);
+    // 場合によって、diffSec === remainingTime が真となり更新が起こらない場合があるその時のために、同一だった場合は remainingTime - 1 を設定する
+    // 更新が行われないと、useEffect が発火されないのでタイマーが止まってしまう。
+    setRemainingTime((t) => (t === diffSec ? t - 1 : diffSec));
   }, [limitDate]);
 
   const switchMode = useCallback(() => {
@@ -43,7 +45,7 @@ const useTimer = (initMode: TimerMode): ReturnType => {
   }, [mode, pomodoroCnt]);
 
   useEffect(() => {
-    setRemainignTime(calcInitTime(mode));
+    setRemainingTime(calcInitTime(mode));
   }, [mode]);
 
   useEffect(() => {
