@@ -21,7 +21,6 @@ const useTimer = (initMode: TimerMode): ReturnType => {
   const [pomodoroCnt, setPomodoroCnt] = useState(0);
 
   const updateTime = useCallback(() => {
-    // setRemainignTime((t) => t - 1);
     if (limitDate == null) return;
 
     // 現在時刻と startTimer 関数が設定した limitDate との差を残り時間とする
