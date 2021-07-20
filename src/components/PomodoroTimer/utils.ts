@@ -1,10 +1,13 @@
+import { calcInitTime } from "./hooks/utils";
 import { TimerMode } from "./types";
 
 const fillZero = (num: number) => {
+  // 負数を0とする
+  const positiveNum = num >= 0 ? num : 0;
   if (num < 10) {
-    return "0" + String(num);
+    return "0" + String(positiveNum);
   } else {
-    return String(num);
+    return String(positiveNum);
   }
 };
 
@@ -27,4 +30,11 @@ export const convModeForView = (mode: TimerMode) => {
   } else {
     throw new Error(`${mode} is not TimerMode type`);
   }
+};
+
+export const calcLimitDate = (timerMode: TimerMode) => {
+  const now = new Date();
+  const sec = calcInitTime(timerMode);
+  const limit = new Date(sec * 1000 + now.getTime());
+  return limit;
 };
