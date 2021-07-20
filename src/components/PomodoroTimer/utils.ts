@@ -1,4 +1,3 @@
-import { calcInitTime } from "./hooks/utils";
 import { TimerMode } from "./types";
 
 const fillZero = (num: number) => {
@@ -30,11 +29,4 @@ export const convModeForView = (mode: TimerMode) => {
   } else {
     throw new Error(`${mode} is not TimerMode type`);
   }
-};
-
-export const calcLimitDate = (timerMode: TimerMode) => {
-  const now = new Date();
-  const sec = calcInitTime(timerMode);
-  const limit = new Date(sec * 1000 + now.getTime());
-  return limit;
 };

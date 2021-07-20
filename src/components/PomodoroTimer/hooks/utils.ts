@@ -18,3 +18,10 @@ export const calcInitTime = (mode: TimerMode) => {
 };
 
 export const nextTiming = () => 1000 - (Date.now() % 1000);
+
+export const calcLimitDate = (timerMode: TimerMode) => {
+  const now = new Date();
+  const sec = calcInitTime(timerMode);
+  const limit = new Date(sec * 1000 + now.getTime());
+  return limit;
+};
